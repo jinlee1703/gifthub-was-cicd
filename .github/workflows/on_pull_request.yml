@@ -48,7 +48,9 @@ jobs:
           cd ./src/main/resources
           touch ./application.yml
           echo "${{ secrets.APPLICATION }}" > ./application.yml
+          touch ./application-dev.yml
           echo "${{ secrets.APPLICATION-DEV }}" > ./application-dev.yml
+          touch ./application-prod.yml
           echo "${{ secrets.APPLICATION-PROD }}" > ./application-prod.yml
         shell: bash
         
