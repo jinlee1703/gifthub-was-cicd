@@ -67,8 +67,8 @@ jobs:
       - name: docker build and push
         run : |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_REPO }}/second-eyes-web .
-          docker push ${{ secrets.DOCKER_REPO }}/second-eyes-web
+          docker build -t ${{ secrets.DOCKER_REPO }}/giftuh-was .
+          docker push ${{ secrets.DOCKER_REPO }}/gifthub-was
 
       # - name: executing remote ssh commands using password
       #   uses: appleboy/ssh-action@master
