@@ -27,8 +27,7 @@ permissions:
   contents: read
 
 jobs:
-  # 1. 테스트 코드를 검증을 위한 가상 환경에서의 빌드
-  test-run:
+  test:
     runs-on: ubuntu-22.04
 
     steps:
@@ -48,8 +47,9 @@ jobs:
           mkdir ./src/main/resources
           cd ./src/main/resources
           touch ./application.yml
-          echo "${{ secrets.APPLICATION_LOCAL }}" > ./application.yml
-          pwd
+          echo "${{ secrets.APPLICATION }}" > ./application.yml
+          echo "${{ secrets.APPLICATION-DEV }}" > ./application-dev.yml
+          echo "${{ secrets.APPLICATION-PROD }}" > ./application-prod.yml
         shell: bash
         
       - name: Setup MySQL
@@ -63,3 +63,22 @@ jobs:
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25
         with:
           arguments: build
+      
+      - name: docker build and push
+        run : |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_REPO }}/second-eyes-web .
+          docker push ${{ secrets.DOCKER_REPO }}/second-eyes-web
+
+      # - name: executing remote ssh commands using password
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ubuntu
+      #     key: ${{ secrets.KEY }}
+      #     script: |
+      #       sudo docker rm -f $(docker ps -qa)
+      #       sudo docker pull ${{ secrets.DOCKER_REPO }}/gifthub-was
+      #       sudo docker pull ${{ secrets.DOCKER_REPO }}/gifthub-was
+      #       docker-compose up -d
+      #       docker image prune -f
