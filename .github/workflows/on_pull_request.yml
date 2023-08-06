@@ -69,8 +69,8 @@ jobs:
       - name: docker build and push
         run : |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t giftuh-was .
-          docker tag gifthub-was:latest repl4242/gifthub:latest
+          docker build -t gifthub-was .
+          docker tag gifthub-was:latest repl4242/gifthub-was:latest
           docker push repl4242/gifthub-was:latest
 
       # - name: executing remote ssh commands using password
