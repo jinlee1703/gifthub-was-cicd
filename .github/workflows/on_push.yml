@@ -1,4 +1,4 @@
-name: Docker Image Run
+name: Docker Image Deploy
 
 on:
   push:
@@ -42,27 +42,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       
-      # - name: AWS SSM Send-Command
-      #   uses: peterkimzz/aws-ssm-send-command@master
-      #   id: ssm
-      #   with:
-      #     aws-region: ${{ secrets.AWS_REGION }}
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     instance-ids: ${{ secrets.INSTANCE_ID }}
-      #     command: ls -al
-      #       # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      #       # docker pull repl4242/gifthub-was:latest
-      #       # docker-compose up
-
-      - name: Run aws ssm send-command
-        uses: nohmad/aws-ssm-send-command-action@master
+      - name: AWS SSM Send-Command
+        uses: peterkimzz/aws-ssm-send-command@master
+        id: ssm
         with:
+          aws-region: ${{ secrets.AWS_REGION }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
-          targets: |
-            [{"Key":"InstanceIds","Values":["i-0d66b850abb9c5a31"]}]
-          document-name: AWS-RunShellScript
-          parameters: |
-            {"commands":["ls"]}
+          instance-ids: ${{ secrets.INSTANCE_ID }}
+          command: ls -al
+            # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            # docker pull repl4242/gifthub-was:latest
+            # docker-compose up
