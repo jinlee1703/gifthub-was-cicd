@@ -54,4 +54,4 @@ jobs:
           command: |
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull repl4242/gifthub-was:latest
-            docker-compose up
+            docker run -t repl4242/gifthub-was:latest
