@@ -51,8 +51,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           instance-ids: ${{ secrets.INSTANCE_ID }}
           working-directory: /home/ubuntu/application
-          command: ls -al
-          comment: Hello world!
-            # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            # docker pull repl4242/gifthub-was:latest
-            # docker-compose up
+          command: |
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker pull repl4242/gifthub-was:latest
+            docker-compose up
