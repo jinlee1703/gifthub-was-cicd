@@ -1,7 +1,7 @@
-name: Java CI with Gradle
+name: Docker Image Run
 
 on:
-  pull_request:
+  push:
     branches: [ "dev", "main" ]
   workflow_dispatch:
     inputs:
